@@ -41,7 +41,6 @@ public class FirstPersonController : MonoBehaviour
 
         Vector3 ActualMovement = (transform.forward * MoveZ) + (transform.right * MoveX);
 
-       // Vector3 ActualMovement = new Vector3(MoveX, 0, MoveZ);
 
         controller.Move(ActualMovement * Time.deltaTime * playerSpeed);
 
