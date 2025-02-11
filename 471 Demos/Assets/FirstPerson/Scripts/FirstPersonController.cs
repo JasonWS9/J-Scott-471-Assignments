@@ -15,10 +15,11 @@ public class FirstPersonController : MonoBehaviour
 
     [SerializeField] GameObject bulletSpawner;
     [SerializeField] GameObject bullet;
+    private float attackCooldown;
 
     private void Start()
     {
-        
+        attackCooldown = Time.time;
         controller = GetComponent<CharacterController>();
     }
 
@@ -44,6 +45,12 @@ public class FirstPersonController : MonoBehaviour
 
         controller.Move(ActualMovement * Time.deltaTime * playerSpeed);
 
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+
+        }
+
     }
 
     void OnMove(InputValue moveVal)
@@ -59,8 +66,14 @@ public class FirstPersonController : MonoBehaviour
 
     void OnAttack()
     {
-        Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
+        if (attackCooldown + 0.5f < Time.time)
+        {
+            Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
+            attackCooldown = Time.time;
+        }
+
     }
+
 
 
 }
