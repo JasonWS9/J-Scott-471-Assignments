@@ -17,6 +17,8 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] GameObject bullet;
     private float attackCooldown;
 
+    private bool hasJumped = false;
+
     private void Start()
     {
         attackCooldown = Time.time;
@@ -42,6 +44,14 @@ public class FirstPersonController : MonoBehaviour
 
         Vector3 ActualMovement = (transform.forward * MoveZ) + (transform.right * MoveX);
 
+        if (hasJumped)
+        {
+            ActualMovement.y = 10;
+
+        }
+
+        ActualMovement.y -= 200 * Time.deltaTime;
+
 
         controller.Move(ActualMovement * Time.deltaTime * playerSpeed);
 
@@ -63,6 +73,10 @@ public class FirstPersonController : MonoBehaviour
         mouseMovement = lookVal.Get<Vector2>();
     }
 
+    void OnJump()
+    {
+        hasJumped = true;
+    }
 
     void OnAttack()
     {
