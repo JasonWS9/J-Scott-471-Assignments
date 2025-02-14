@@ -90,7 +90,7 @@ public class EnemyController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance))
         {
-            FirstPersonController player = hit.transform.gameObject.GetComponent<FirstPersonController>();
+            StealthPlayerController player = hit.transform.gameObject.GetComponent<StealthPlayerController>();
 
             if (player != null) 
             {

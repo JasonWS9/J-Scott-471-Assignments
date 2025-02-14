@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FirstPersonController : MonoBehaviour
+public class StealthPlayerController : MonoBehaviour
 {
 
 
@@ -13,15 +13,8 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] GameObject cam;
     float cameraUpRotation = 0;
 
-    [SerializeField] GameObject bulletSpawner;
-    [SerializeField] GameObject bullet;
-    private float attackCooldown;
-
-    private bool hasJumped = false;
-
     private void Start()
     {
-        attackCooldown = Time.time;
         controller = GetComponent<CharacterController>();
     }
 
@@ -44,19 +37,12 @@ public class FirstPersonController : MonoBehaviour
 
         Vector3 ActualMovement = (transform.forward * MoveZ) + (transform.right * MoveX);
 
-        if (hasJumped)
-        {
-            ActualMovement.y = 10;
-
-        }
-
-        ActualMovement.y -= 200 * Time.deltaTime;
-
 
         controller.Move(ActualMovement * Time.deltaTime * playerSpeed);
 
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Application.Quit();
 
         }
@@ -69,24 +55,12 @@ public class FirstPersonController : MonoBehaviour
     }
 
     void OnLook(InputValue lookVal)
-    { 
+    {
         mouseMovement = lookVal.Get<Vector2>();
     }
 
-    void OnJump()
-    {
-        hasJumped = true;
-    }
 
-    void OnAttack()
-    {
-        if (attackCooldown + 0.5f < Time.time)
-        {
-            Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
-            attackCooldown = Time.time;
-        }
-
-    }
+ 
 
 
 
