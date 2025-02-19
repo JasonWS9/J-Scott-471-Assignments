@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SimpleStateMachine/Scene/SimpleState.unity
     guid: 28b34b6e3a13adf479baadc027b766b2
-  - enabled: 1
+  - enabled: 0
     path: Assets/FirstPerson/FPS.unity
     guid: 3ad486924800e644587efb13da666144
-  - enabled: 1
+  - enabled: 0
     path: Assets/RollABall/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
