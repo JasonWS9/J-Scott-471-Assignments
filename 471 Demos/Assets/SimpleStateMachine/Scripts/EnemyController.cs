@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     {
         Pace,
         Follow,
+        LostPlayer,
     }
 
     private State currentState = State.Pace;
@@ -27,6 +28,9 @@ public class EnemyController : MonoBehaviour
                 break;
             case State.Follow:
                 OnFollow();
+                break;
+            case State.LostPlayer:
+                OnLostPlayer();
                 break;
         }
     }
@@ -75,6 +79,10 @@ public class EnemyController : MonoBehaviour
         {
             currentState = State.Pace;
         }
+    }
+    void OnLostPlayer()
+    {
+        print("Lost Player");
     }
 
     private void MoveTo(GameObject t)

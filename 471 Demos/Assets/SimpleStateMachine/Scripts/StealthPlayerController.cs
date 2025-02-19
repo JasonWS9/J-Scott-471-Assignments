@@ -43,20 +43,21 @@ public class StealthPlayerController : MonoBehaviour
         movement = moveVal.Get<Vector2>();
     }
 
-    /*
-    private void OnCollisionEnter(Collision collision)
+    
+    
+/*
+    void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        EnemyController enemy = hit.gameObject.GetComponent<EnemyController>();
+        if (enemy != null)
         {
             GameOver();
         }
     }
-
-    */
-
-    void OnCollisionEnter(Collision collision)
+*/
+    void OnTriggerEnter(Collider collider)
     {
-        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+        EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
         if (enemy != null)
         {
             GameOver();
@@ -64,14 +65,12 @@ public class StealthPlayerController : MonoBehaviour
     }
 
 
+
     private void GameOver()
     {
         Debug.Log("Game Over");
-        SceneManager.LoadScene("SimpleStateMachine");
+        SceneManager.LoadScene("SimpleState");
     }
-
-
-
 
 
 }
