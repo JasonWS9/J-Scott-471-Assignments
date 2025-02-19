@@ -15,10 +15,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] GameObject[] route;
     GameObject target;
     int routeIndex = 0;
-    private float speed = 5f;
-
+    private float speed;
+    [SerializeField] float normalSpeed = 4f;
+    [SerializeField] float chasingSpeed = 6f;
     private float raycastDistance = 15f;
 
+
+    public float rotationSpeed = 360f; // Degrees per second when spinning
+    public float spinTime = 4f;
+    private float lostTimer = 0f;
     void Update()
     {
         switch (currentState)
@@ -37,8 +42,12 @@ public class EnemyController : MonoBehaviour
 
     void OnPace() 
     {
+
         //What do we do when we are pacing
-        print("Im pacing");
+
+        speed = normalSpeed;
+
+        //print("Im pacing");
         target = route[routeIndex];
 
         MoveTo(target);
@@ -68,7 +77,10 @@ public class EnemyController : MonoBehaviour
     void OnFollow()
     {
         //What do we do when we are following
-        print("Im following");
+
+        speed = chasingSpeed;
+
+        //print("Im following");
         MoveTo(target);
 
         //On what condition do we switch states
@@ -78,11 +90,32 @@ public class EnemyController : MonoBehaviour
         if (obstacle == null)
         {
             currentState = State.Pace;
+            lostTimer = spinTime;
+            currentState = State.LostPlayer;
         }
     }
     void OnLostPlayer()
     {
-        print("Lost Player");
+        if (lostTimer > 0)
+        {
+            float rotationStep = rotationSpeed * Time.deltaTime;
+            transform.Rotate(Vector3.up, rotationStep);
+            lostTimer -= Time.deltaTime;
+            GameObject obstacle = CheckForward();
+
+            if (obstacle != null)
+            {
+                target = obstacle;
+                currentState = State.Follow;
+                return;
+            }
+        }
+        else
+        {
+            //print("Finished Spinning, Returning to Patrol");
+            currentState = State.Pace;
+        }
+        //print("Lost Player");
     }
 
     private void MoveTo(GameObject t)
@@ -102,7 +135,7 @@ public class EnemyController : MonoBehaviour
 
             if (player != null) 
             {
-                print(hit.transform.gameObject.name);
+                //print(hit.transform.gameObject.name);
                 return hit.transform.gameObject;
             } 
         }

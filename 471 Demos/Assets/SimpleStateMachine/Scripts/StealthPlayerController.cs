@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,17 +10,28 @@ public class StealthPlayerController : MonoBehaviour
 
     Vector2 movement;
     CharacterController controller;
-    [SerializeField] float playerSpeed = 10f;
+    private float playerSpeed;
+    private float normalSpeed = 5f;
+    private float boostedSpeed = 10f;
 
+    private float speedBoostDuration = 1f;
+    private float speedBoostCooldown = 3f;
+    private bool canSprint = true;
 
     private void Start()
     {
+        print("Get to the goal without being detected");
+        print("Dont Let Enemies See Or Touch You!");
+        print("Movement: WASD Speed Boost: LShift");
+
+
+        playerSpeed = normalSpeed;
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-
+        //Debug.Log(playerSpeed);
 
         float MoveX = movement.x;
         float MoveZ = movement.y;
@@ -36,6 +48,8 @@ public class StealthPlayerController : MonoBehaviour
 
         }
 
+
+
     }
 
     void OnMove(InputValue moveVal)
@@ -43,18 +57,35 @@ public class StealthPlayerController : MonoBehaviour
         movement = moveVal.Get<Vector2>();
     }
 
-    
-    
-/*
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    void OnSprint(InputValue sprintVal)
     {
-        EnemyController enemy = hit.gameObject.GetComponent<EnemyController>();
-        if (enemy != null)
+        if (canSprint)
         {
-            GameOver();
+            StartCoroutine(SpeedBoost());
         }
     }
-*/
+    
+    IEnumerator SpeedBoost()
+    {
+        canSprint = false;
+        playerSpeed = boostedSpeed;
+        yield return new WaitForSeconds(speedBoostDuration);
+        playerSpeed = normalSpeed;
+
+        yield return new WaitForSeconds(speedBoostCooldown);
+        canSprint = true;
+    }
+
+    /*
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            EnemyController enemy = hit.gameObject.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                GameOver();
+            }
+        }
+    */
     void OnTriggerEnter(Collider collider)
     {
         EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
@@ -62,6 +93,16 @@ public class StealthPlayerController : MonoBehaviour
         {
             GameOver();
         }
+
+        if (collider.CompareTag("Goal"))
+        {
+            SceneManager.LoadScene("SimpleState");
+            print("You Win!");
+            print("You Win!");
+            print("You Win!");
+            print("You Win!");
+        }
+    
     }
 
 
