@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] GameObject[] route;
     GameObject target;
     int routeIndex = 0;
+
+
     private float speed;
     [SerializeField] float normalSpeed = 4f;
     [SerializeField] float chasingSpeed = 6f;
@@ -131,12 +133,16 @@ public class EnemyController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance))
         {
-            StealthPlayerController player = hit.transform.gameObject.GetComponent<StealthPlayerController>();
+            PlayerStateManager player = hit.transform.gameObject.GetComponent<PlayerStateManager>();
 
             if (player != null) 
             {
-                //print(hit.transform.gameObject.name);
-                return hit.transform.gameObject;
+                if (player.currentState != player.sneakState)
+                {
+                    //print(hit.transform.gameObject.name);
+                    return hit.transform.gameObject;
+                }
+
             } 
         }
 

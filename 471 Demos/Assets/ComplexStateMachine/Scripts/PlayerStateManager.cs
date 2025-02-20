@@ -5,20 +5,25 @@ public class PlayerStateManager : MonoBehaviour
 {
 
 
-    PlayerBaseState currentState;
+    [HideInInspector] public PlayerBaseState currentState;
 
-    PlayerIdleState idleState = new PlayerIdleState();
+    [HideInInspector] public PlayerIdleState idleState = new PlayerIdleState();
+    [HideInInspector] public PlayerWalkState walkState = new PlayerWalkState();
+    [HideInInspector] public PlayerSneakState sneakState = new PlayerSneakState();
 
-    PlayerWalkState walkState = new PlayerWalkState();
 
-    public Vector2 movement;
+    public float defaultSpeed = 100f;
+    [HideInInspector] public Vector2 movement;
+
+    [HideInInspector] public bool isSneaking = false;
+
     CharacterController controller;
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        currentState = walkState;
+        
 
-        currentState.EnterState(this);
+        SwitchState(idleState);
     }
 
 
@@ -35,17 +40,35 @@ public class PlayerStateManager : MonoBehaviour
         movement = moveVal.Get<Vector2>();
     }
 
+    void OnSprint()
+    {
+        if (isSneaking == false)
+        {
+            isSneaking = true;
+        } else
+        {
+            isSneaking = false;
+        }
+    }
+
     // Helper Function
 
-    private float playerSpeed = 10f;
-
-    public void MovePlayer()
+    public void MovePlayer(float speed)
     {
         float moveX = movement.x;
         float moveZ = movement.y;
 
         Vector3 actual_movement = new Vector3(moveX, 0, moveZ);
-        controller.Move(actual_movement * playerSpeed * Time.deltaTime);
+        controller.Move(actual_movement * speed * Time.deltaTime);
     }
+
+
+
+    public void SwitchState(PlayerBaseState newState)
+    {
+        currentState = newState;
+        currentState.EnterState(this);
+    }
+
 
 }
