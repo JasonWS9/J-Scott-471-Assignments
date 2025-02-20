@@ -40,9 +40,9 @@ public class PlayerStateManager : MonoBehaviour
         movement = moveVal.Get<Vector2>();
     }
 
-    void OnSprint()
+    void OnSprint(InputValue sprintVal)
     {
-        if (isSneaking == false)
+        if (sprintVal.isPressed)
         {
             isSneaking = true;
         } else
