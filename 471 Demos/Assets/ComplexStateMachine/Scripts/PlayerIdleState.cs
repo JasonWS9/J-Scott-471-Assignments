@@ -15,16 +15,36 @@ public class PlayerIdleState : PlayerBaseState
         //Nothing
 
         //On what conditions do we leave this state
+        if (Input.GetButtonDown("Jump"))
+        {
+            player.SwitchState(player.jumpChargeState);
+        }
+
         if (player.movement.magnitude > 0.1)
         {
-            if(player.isSneaking)
-            {
-                player.SwitchState(player.sneakState);
-            } else
-            {
-                player.SwitchState(player.walkState);
 
+
+            if (!player.isJumping)
+            {
+                if (player.isSneaking)
+                {
+                    player.SwitchState(player.sneakState);
+                }
+                else if (player.isSprinting)
+                {
+                    player.SwitchState(player.sprintState);
+                }
+                else
+                {
+                    player.SwitchState(player.walkState);
+
+                }
             }
+            
+           
+
+
+
         }
 
     }
