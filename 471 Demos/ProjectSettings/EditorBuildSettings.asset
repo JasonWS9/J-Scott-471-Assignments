@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ComplexStateMachine/ComplexState.unity
+    path: Assets/PolishedGame/Scenes/PolishedScene.unity
+    guid: 50fc279724b85484daadde6ca3b9206c
+  - enabled: 1
+    path: Assets/PolishedGame/Scenes/PolishEndGame.unity
+    guid: a5cc2596c37041148bf989554ce022a2
+  - enabled: 0
+    path: Assets/ComplexStateMachine/Scenes/ComplexState.unity
     guid: 29d9acc691bd29d48bb9cf7313d20283
   - enabled: 0
     path: Assets/SimpleStateMachine/Scene/SimpleState.unity

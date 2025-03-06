@@ -26,6 +26,12 @@ public class EnemyController : MonoBehaviour
     public float rotationSpeed = 360f; // Degrees per second when spinning
     public float spinTime = 4f;
     private float lostTimer = 0f;
+
+    private Animator anim;
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     void Update()
     {
         switch (currentState)
@@ -46,6 +52,8 @@ public class EnemyController : MonoBehaviour
     {
 
         //What do we do when we are pacing
+
+        anim.SetBool("Following", false);
 
         speed = normalSpeed;
 
@@ -81,6 +89,8 @@ public class EnemyController : MonoBehaviour
         //What do we do when we are following
 
         speed = chasingSpeed;
+
+        anim.SetBool("Following", true);
 
         //print("Im following");
         MoveTo(target);
