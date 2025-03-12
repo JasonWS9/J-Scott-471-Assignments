@@ -27,10 +27,10 @@ public class EnemyController : MonoBehaviour
     public float spinTime = 4f;
     private float lostTimer = 0f;
 
-    private Animator anim;
+    //private Animator anim;
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
 
         //What do we do when we are pacing
 
-        anim.SetBool("Following", false);
+        //anim.SetBool("Following", false);
 
         speed = normalSpeed;
 
@@ -90,7 +90,7 @@ public class EnemyController : MonoBehaviour
 
         speed = chasingSpeed;
 
-        anim.SetBool("Following", true);
+        //anim.SetBool("Following", true);
 
         //print("Im following");
         MoveTo(target);
@@ -143,15 +143,12 @@ public class EnemyController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance))
         {
-            PlayerStateManager player = hit.transform.gameObject.GetComponent<PlayerStateManager>();
+            StealthPlayerController player = hit.transform.gameObject.GetComponent<StealthPlayerController>();
 
             if (player != null) 
             {
-                if (player.currentState != player.sneakState)
-                {
-                    //print(hit.transform.gameObject.name);
+
                     return hit.transform.gameObject;
-                }
 
             } 
         }

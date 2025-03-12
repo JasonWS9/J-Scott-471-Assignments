@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/PolishedGame/Scenes/PolishedGame.unity
+    guid: 8321c8be2fcdedf40880f403bc8a6c9a
+  - enabled: 1
+    path: Assets/PolishedGame/Scenes/PolishWinScreen.unity
+    guid: b31f684f0235fd046a03b9d697703e61
+  - enabled: 1
+    path: Assets/PolishedGame/Scenes/PolishLoseScreen.unity
+    guid: 32e5d8e34c969d24aa487dade43ba0bc
+  - enabled: 0
     path: Assets/PolishedGame/Scenes/PolishedScene.unity
     guid: 50fc279724b85484daadde6ca3b9206c
-  - enabled: 1
-    path: Assets/PolishedGame/Scenes/PolishEndGame.unity
-    guid: a5cc2596c37041148bf989554ce022a2
   - enabled: 0
     path: Assets/ComplexStateMachine/Scenes/ComplexState.unity
     guid: 29d9acc691bd29d48bb9cf7313d20283

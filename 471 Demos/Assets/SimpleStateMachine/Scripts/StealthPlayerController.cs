@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class StealthPlayerController : MonoBehaviour
 {
 
-
+    private Animator animator;
     Vector2 movement;
     CharacterController controller;
     private float playerSpeed;
@@ -16,9 +16,13 @@ public class StealthPlayerController : MonoBehaviour
     private float speedBoostDuration = 1f;
     private float speedBoostCooldown = 3f;
     private bool canSprint = true;
+    private bool isSprinting = false;
 
     private void Start()
     {
+
+        animator = GetComponent<Animator>();
+
         print("Get to the goal without being detected");
         print("Dont Let Enemies See Or Touch You!");
         print("Movement: WASD Speed Boost: LShift");
@@ -68,8 +72,10 @@ public class StealthPlayerController : MonoBehaviour
     {
         canSprint = false;
         playerSpeed = boostedSpeed;
+        animator.SetBool("IsSprinting", true);
         yield return new WaitForSeconds(speedBoostDuration);
         playerSpeed = normalSpeed;
+        animator.SetBool("IsSprinting", false);
 
         yield return new WaitForSeconds(speedBoostCooldown);
         canSprint = true;
@@ -87,19 +93,16 @@ public class StealthPlayerController : MonoBehaviour
     */
     void OnTriggerEnter(Collider collider)
     {
+        
         EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
         if (enemy != null)
         {
             GameOver();
         }
-
+        
         if (collider.CompareTag("Goal"))
         {
-            SceneManager.LoadScene("SimpleState");
-            print("You Win!");
-            print("You Win!");
-            print("You Win!");
-            print("You Win!");
+            YouWin();
         }
     
     }
@@ -109,8 +112,18 @@ public class StealthPlayerController : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Game Over");
-        SceneManager.LoadScene("SimpleState");
+        SceneManager.LoadScene("PolishLoseScreen");
     }
 
+    private void YouWin()
+    {
+        Debug.Log("Game Over");
+        SceneManager.LoadScene("PolishWinScreen");
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("PolishedGame");
+    }
 
 }
