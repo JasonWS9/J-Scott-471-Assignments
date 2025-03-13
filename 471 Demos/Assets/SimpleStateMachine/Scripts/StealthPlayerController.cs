@@ -16,7 +16,6 @@ public class StealthPlayerController : MonoBehaviour
     private float speedBoostDuration = 1f;
     private float speedBoostCooldown = 3f;
     private bool canSprint = true;
-    private bool isSprinting = false;
 
     private void Start()
     {
